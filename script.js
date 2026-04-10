@@ -1,7 +1,6 @@
-// Particles animation
+// Particles
 function createParticles() {
     const particlesContainer = document.querySelector('.particles');
-    
     for (let i = 0; i < 50; i++) {
         const particle = document.createElement('div');
         particle.className = 'particle';
@@ -17,48 +16,24 @@ function createParticles() {
 function showSurprise() {
     document.getElementById('surprise').classList.remove('hidden');
     document.querySelector('.btn-surprise').style.display = 'none';
-    
-    // Hitung hari bersama
-    const startDate = new Date('2023-01-01'); // Ganti tanggal pacaran
-    const today = new Date();
-    const daysTogether = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-    document.getElementById('days-together').textContent = daysTogether;
 }
 
-// Mulai
-createParticles();
-let musicPlaying = false;
-
+// MUSIC FIXED ← INI YANG BARU
 function toggleMusic() {
     const music = document.getElementById('bgMusic');
     const btn = document.getElementById('musicBtn');
-    
-    if (musicPlaying) {
-        music.pause();
-        btn.textContent = '🎵 Play Birthday Song';
-        btn.classList.remove('playing');
-        musicPlaying = false;
-    } else {
-        music.play();
-        btn.textContent = '🎵 Stop Music';
-        btn.classList.add('playing');
-        musicPlaying = true;
-    }
-}
-function toggleMusic() {
-    const music = document.getElementById('bgMusic');
-    const btn = document.getElementById('musicBtn');
-    
-    if (!music.src) {
-        alert('Download birthday-song.mp3 dulu ya sayang! 💕');
-        return;
-    }
     
     if (music.paused) {
-        music.play();
-        btn.innerHTML = '⏸️ Stop Music';
+        music.load();
+        music.play().then(() => {
+            btn.innerHTML = '⏸️ Stop Music';
+        }).catch(e => {
+            btn.innerHTML = '🎵 Allow → Click Again';
+        });
     } else {
         music.pause();
-        btn.innerHTML = '🎵 Play Love Song';
+        btn.innerHTML = '🎵 Play Birthday Song';
     }
 }
+
+createParticles();
