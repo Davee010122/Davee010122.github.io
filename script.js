@@ -27,3 +27,38 @@ function showSurprise() {
 
 // Mulai
 createParticles();
+let musicPlaying = false;
+
+function toggleMusic() {
+    const music = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    
+    if (musicPlaying) {
+        music.pause();
+        btn.textContent = '🎵 Play Birthday Song';
+        btn.classList.remove('playing');
+        musicPlaying = false;
+    } else {
+        music.play();
+        btn.textContent = '🎵 Stop Music';
+        btn.classList.add('playing');
+        musicPlaying = true;
+    }
+}
+function toggleMusic() {
+    const music = document.getElementById('bgMusic');
+    const btn = document.getElementById('musicBtn');
+    
+    if (!music.src) {
+        alert('Download birthday-song.mp3 dulu ya sayang! 💕');
+        return;
+    }
+    
+    if (music.paused) {
+        music.play();
+        btn.innerHTML = '⏸️ Stop Music';
+    } else {
+        music.pause();
+        btn.innerHTML = '🎵 Play Love Song';
+    }
+}
