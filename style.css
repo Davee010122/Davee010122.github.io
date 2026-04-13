@@ -316,7 +316,7 @@ body {
 /* 🎵 YOUTUBE MUSIC PLAYER - KADO TERINDAH 🎁 */
 .music-player {
     position: fixed;
-    bottom: 30px;
+    top: 30px;
     right: 30px;
     z-index: 1000;
 }
@@ -408,9 +408,11 @@ body {
     .love-stats { grid-template-columns: 1fr; }
     
     .music-player {
-        bottom: 20px !important;
-        right: 20px !important;
-    }
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 1000;
+}
     
     #musicControl {
         width: 65px;

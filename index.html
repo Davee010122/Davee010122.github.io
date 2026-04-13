@@ -384,11 +384,11 @@
 
         /* MUSIC PLAYER */
         .music-player {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 1000;
+}
 
         #musicControl {
             width: 60px;
@@ -496,17 +496,14 @@
     </div>
 
     <!-- MUSIC CONTROL -->
-    <div class="music-player" id="musicPlayer" style="display: none;">
-        <button id="musicControl" title="Music Control">
-            <i class="fas fa-pause"></i>
-        </button>
-    </div>
+    <button id="musicControl">
+    <i class="fas fa-play"></i>
+</button>
+    </div> 
 
-    
-    <!-- AUDIO (akan dimuat secara dinamis) -->
-    <audio id="partyMusic" loop>
-    <source src="love-song.mp3" type="audio/mpeg">
-</audio>
+<!-- TEST AUDIO (SEMENTARA) -->
+<audio id="partyMusic" src="love-song.mp3" playsinline></audio>
+
     <script>
         // GLOBAL VARIABLES
         let partyMusic = null;
@@ -558,19 +555,33 @@
         }
 
         function togglePartyMusic() {
-            const btn = document.getElementById('musicControl');
-            const icon = btn.querySelector('i');
-            
-            if (partyMusic && !partyMusic.paused) {
-                partyMusic.pause();
-                icon.className = 'fas fa-play';
-                isMusicPlaying = false;
-            } else {
-                partyMusic.play().catch(e => console.log('Play failed'));
+    const music = document.getElementById('partyMusic');
+    const icon = document.querySelector('#musicControl i');
+
+    if (!music) return;
+
+    if (music.paused) {
+
+        // 🔥 LANGSUNG set detik 20 TANPA EVENT
+        try {
+            music.currentTime = 20;
+        } catch(e) {}
+
+        const playPromise = music.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
                 icon.className = 'fas fa-pause';
-                isMusicPlaying = true;
-            }
+            }).catch(() => {
+                alert("Klik sekali lagi ya 🙏");
+            });
         }
+
+    } else {
+        music.pause();
+        icon.className = 'fas fa-play';
+    }
+}
 
         // 3. FOTO SLIDESHOW
         function showPhoto(n) {
@@ -726,8 +737,9 @@
         }
 
         // 8. EVENT LISTENERS
-        document.getElementById('musicControl').addEventListener('click', togglePartyMusic);
-
+        
+        document.getElementById('musicControl')
+    .addEventListener('click', togglePartyMusic);
         // Resize handler
         window.addEventListener('resize', () => {
             calculateDaysTogether();

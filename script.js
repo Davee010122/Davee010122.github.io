@@ -8,7 +8,6 @@ let photoTimeout;
 
 // 1. START BIRTHDAY (dari popup)
 function startBirthday() {
-    // Hide popup, show main content
     const popup = document.getElementById('birthdayPopup');
     const mainContainer = document.getElementById('mainContainer');
     const musicPlayer = document.getElementById('musicPlayer');
@@ -17,49 +16,41 @@ function startBirthday() {
     if (mainContainer) mainContainer.classList.add('show');
     if (musicPlayer) musicPlayer.style.display = 'block';
     
-    // Start effects
     createParticles();
     startFallingHearts();
     preloadPhotos();
     calculateDaysTogether();
 
-    const audio = document.getElementById('partyMusic');
-audio.currentTime = 20;
-audio.play().catch(() => {});
+    // ✅ FIX DI SINI
     
-   
-
     
 }
 
 function togglePartyMusic() {
-    const audio = document.getElementById('partyMusic');
-    const btn = document.getElementById('musicControl');
-    const icon = btn.querySelector('i');
+    const music = document.getElementById('partyMusic');
+    const icon = document.querySelector('#musicControl i');
 
-    if (!audio) {
-        alert("Audio tidak ditemukan!");
-        return;
-    }
+    if (!music) return;
 
-    if (audio.paused) {
-        // pastikan mulai dari detik 20 setelah siap
-        audio.addEventListener('loadedmetadata', () => {
-            audio.currentTime = 20;
-        }, { once: true });
+    if (music.paused) {
 
-        audio.play()
-            .then(() => {
+        // 🔥 LANGSUNG set detik 20 TANPA EVENT
+        try {
+            music.currentTime = 20;
+        } catch(e) {}
+
+        const playPromise = music.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
                 icon.className = 'fas fa-pause';
-                console.log("Lagu berhasil diputar");
-            })
-            .catch(err => {
-                console.log("Error play:", err);
-                alert("Browser blokir audio 😢 klik lagi ya");
+            }).catch(() => {
+                alert("Klik sekali lagi ya 🙏");
             });
+        }
 
     } else {
-        audio.pause();
+        music.pause();
         icon.className = 'fas fa-play';
     }
 }
