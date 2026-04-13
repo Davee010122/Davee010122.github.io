@@ -1,22 +1,449 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <!-- FORCE MOBILE -->
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="manifest" href="data:application/manifest+json,{
+    'name': 'Birthday Love',
+    'short_name': 'Birthday',
+    'start_url': '.',
+    'display': 'standalone'
+}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Cuyungggg ❤️</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Happy Birthday Cuyunggg ❤️ David Harold Pattinama</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Particles Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* WELCOME POPUP */
+        #birthdayPopup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, rgba(255,107,107,0.98), rgba(255,193,7,0.95));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            animation: popupGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes popupGlow {
+            0% { filter: drop-shadow(0 0 20px rgba(255,107,107,0.8)); }
+            100% { filter: drop-shadow(0 0 30px rgba(255,193,7,0.8)); }
+        }
+
+        .popup-content {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(25px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            max-width: 500px;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.3);
+            animation: popupBounce 1s ease-out;
+        }
+
+        @keyframes popupBounce {
+            0% { transform: scale(0.3) rotate(5deg); opacity: 0; }
+            50% { transform: scale(1.05) rotate(-2deg); }
+            70% { transform: scale(0.98) rotate(1deg); }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .heart-big {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .popup-title {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            margin: 0 0 20px;
+            color: white;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            font-weight: 700;
+        }
+
+        .popup-name {
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            margin: 0 0 30px;
+            color: #ffd93d;
+            font-weight: 600;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .popup-text {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 40px;
+            line-height: 1.5;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .btn-start {
+            padding: 22px 50px;
+            font-size: 1.4rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 1px;
+            box-shadow: 0 20px 50px rgba(255,107,107,0.5);
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(255,107,107,0.7);
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+
+        .container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .heart-float {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none;
+            z-index: 5;
+            animation: floatHeart 6s infinite linear;
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        .birthday-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            text-align: center;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d, #ff9ff3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 40px 0;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+            font-weight: 700;
+        }
+
+        @keyframes titleGlow {
+            from { filter: drop-shadow(0 0 20px #ff6b6b); }
+            to { filter: drop-shadow(0 0 30px #ffd93d); }
+        }
+
+        .nama-pacar {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-align: center;
+            color: #ff6b6b;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-shadow: 0 5px 20px rgba(255,107,107,0.5);
+            animation: nameBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes nameBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .message {
+            background: rgba(230, 173, 173, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 800px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .message p {
+            font-size: 1.3rem;
+            color: #444;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+
+        /* PHOTO SLIDESHOW */
+        .photo-section {
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .slideshow-wrapper {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+        }
+
+        .main-photo {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .slideshow-wrapper:hover .main-photo {
+            transform: scale(1.05);
+        }
+
+        .nav-dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.7);
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .dot.active {
+            background: #ffd93d;
+            transform: scale(1.5);
+            box-shadow: 0 0 20px #ffd93d;
+        }
+
+        .photo-text {
+            font-size: 2rem;
+            margin-top: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* PROMISES */
+        .promises {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 50px auto;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(255,154,158,0.3);
+        }
+
+        .promises h3 {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 30px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .promises ul {
+            list-style: none;
+            text-align: left;
+        }
+
+        .promises li {
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 15px 0;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .promises li::before {
+            content: '💍';
+            position: absolute;
+            left: 0;
+            font-size: 1.3rem;
+        }
+
+        /* SURPRISE */
+        .btn-surprise {
+            display: block;
+            margin: 60px auto;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            box-shadow: 0 20px 50px rgba(255,107,107,0.4);
+            transition: all 0.3s;
+        }
+
+        .btn-surprise:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 30px 60px rgba(255,107,107,0.6);
+        }
+
+        .surprise {
+            background: linear-gradient(135deg, #ffd93d, #ff9a9e);
+            border-radius: 25px;
+            padding: 50px;
+            margin: 50px auto;
+            max-width: 700px;
+            text-align: center;
+            box-shadow: 0 30px 70px rgba(255,217,61,0.4);
+            transform: scale(0);
+            opacity: 0;
+            transition: all 0.8s ease;
+        }
+
+        .surprise.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .surprise h3 {
+            font-size: 3rem;
+            color: #fff;
+            margin-bottom: 30px;
+            text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            animation: surprisePop 1s ease;
+        }
+
+        @keyframes surprisePop {
+            0% { transform: scale(0) rotate(180deg); }
+            70% { transform: scale(1.2) rotate(-10deg); }
+            100% { transform: scale(1) rotate(0); }
+        }
+
+        .love-stats p {
+            font-size: 1.4rem;
+            color: #fff;
+            margin: 20px 0;
+            font-weight: 600;
+        }
+
+        /* MUSIC PLAYER */
+        .music-player {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        #musicControl {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 15px 40px rgba(255,107,107,0.5);
+            transition: all 0.3s;
+        }
+
+        #musicControl:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .popup-content { padding: 40px 25px; margin: 20px; }
+            .container { padding: 15px; }
+            .message, .promises, .surprise { padding: 30px 20px; }
+            .slideshow-wrapper { max-width: 100%; }
+            .main-photo { height: 300px; }
+        }
+
+        /* HIDDEN CLASS */
+        .hidden { display: none !important; }
+    </style>
 </head>
 <body>
-    <!-- Particles Background -->
-    <div class="particles"></div>
-    
-    <!-- Main Content -->
-    <div class="container">
-        <div class="heart">💖</div>
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- WELCOME POPUP -->
+    <div id="birthdayPopup">
+        <div class="popup-content">
+            <div class="heart-big">💖</div>
+            <h1 class="popup-title">Happy Birthday</h1>
+            <h2 class="popup-name">David Harold Pattinama</h2>
+            <p class="popup-text">Klik untuk mulai! 🎂💕</p>
+            <button class="btn-start" onclick="startBirthdayParty()">
+                🎉 MULAI PESTA 💖
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="container" id="mainContainer">
+        <div class="heart-float" style="animation-delay: 0s; left: 10%;">💖</div>
+        <div class="heart-float" style="animation-delay: 2s; left: 80%;">💕</div>
         
         <h1 class="birthday-title">Happy Birthday</h1>
-        <h2 class="nama-pacar">[DAVID HAROLD PATTINAMA]</h2>
+        <h2 class="nama-pacar">DAVID HAROLD PATTINAMA</h2>
         
         <div class="message">
             <p>Happy birthday cintaku sayangg</p>
@@ -28,55 +455,319 @@
             <p>Tuhan Yesus jadikan sayang pribadi yang lebih bertanggung jawab</p>
             <p>Tuhan Yesus berikan berkat berlimpah dan umur yang panjang</p>
             <p>Tuhan Yesus memberkati selalu harolddkuu ❤️</p>
-    
         </div>
         
-       <div class="photo-slideshow">
-    <div class="slideshow-container">
-        <img id="slideshow-img" src="foto1.jpg" alt="Our moments">
-        <div class="dots">
-            <span class="dot active" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-            <span class="dot" onclick="currentSlide(4)"></span>
-            <span class="dot" onclick="currentSlide(5)"></span>
-            <span class="dot" onclick="currentSlide(6)"></span>
-            <span class="dot" onclick="currentSlide(7)"></span>
+        <!-- FOTO SLIDESHOW -->
+        <div class="photo-section">
+            <div class="slideshow-wrapper">
+                <img id="slideImg" src="https://images.unsplash.com/photo-1516589178581-6cd7838b8e0d?w=500&h=400&fit=crop" class="main-photo" alt="Foto 1">
+                <div class="nav-dots">
+                    <span class="dot active" onclick="showPhoto(1)"></span>
+                    <span class="dot" onclick="showPhoto(2)"></span>
+                    <span class="dot" onclick="showPhoto(3)"></span>
+                    <span class="dot" onclick="showPhoto(4)"></span>
+                    <span class="dot" onclick="showPhoto(5)"></span>
+                    <span class="dot" onclick="showPhoto(6)"></span>
+                    <span class="dot" onclick="showPhoto(7)"></span>
+                </div>
+            </div>
+            <p class="photo-text">❤️📸</p>
         </div>
-    </div>
-    <p>❤️📸</p>
-</div>
         
-       <div class="promises">
-    <h3>💍 My Promises</h3>
-    <ul>
-        <li>Always support your dreams</li>
-        <li>Pray for you everyday</li>
-        <li>Never give up on us</li>
-        <li>Love you more each passing day</li>
-    </ul>
-</div>
+        <div class="promises">
+            <h3>💍 My Promises</h3>
+            <ul>
+                <li>Always support your dreams</li>
+                <li>Pray for you everyday</li>
+                <li>Never give up on us</li>
+                <li>Love you more each passing day</li>
+            </ul>
+        </div>
         
-        <button class="btn-surprise" onclick="showSurprise()">Klik untuk Kejutan! 🎁</button>
-        
+        <button class="btn-surprise" onclick="showSurprise()">🎁 Kejutan Spesial!</button>
         <div id="surprise" class="surprise hidden">
-            <h3>💕 SURPRISE! 💕</h3>
-            <p>Vee sayangg dan cintaaa davee <strong>selamanyaaaaa</strong>!</p>
+            <h3>🎉 SURPRISE! 🎉</h3>
+                       <p><strong> Vee sayang dan cintaaa Dav selamanyaaaaa</strong> ❤️</p>
             <div class="love-stats">
-                <p>Days we've been together: <span id="days-together">1826</span> hari</p>
-                <p>Times i've said "I love you": <span id="love-count">1000+</span></p>
+                <p>Together: <span id="daysTogether">1826</span> days and 4ever</p>
+                <p>"I love you": <span>♾️</span></p>
             </div>
         </div>
     </div>
-    
-    <script src="script.js"></script>
 
-<div class="music-player">
-    <button id="musicBtn" onclick="toggleMusic()">🎵 Play Love Song</button>
-    <audio id="bgMusic" loop preload="auto">
-    <source src="./birthday-song.mp3" type="audio/mpeg">
-</audio>
+    <!-- MUSIC CONTROL -->
+    <div class="music-player" id="musicPlayer" style="display: none;">
+        <button id="musicControl" title="Music Control">
+            <i class="fas fa-pause"></i>
+        </button>
+    </div>
+    <!-- 🎵 KADO TERINDAH GLENN SEBASTIAN (detik 20+) -->
+<div id="youtubePlayer" style="position:fixed;top:-100%;width:1px;height:1px;opacity:0;z-index:1001;">
+    <iframe 
+        id="ytPlayer" 
+        src="https://www.youtube.com/embed/XL73M1ubdnQ?start=20&autoplay=1&mute=0&loop=1&playlist=XL73M1ubdnQ&controls=0&showinfo=0&rel=0" 
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+    </iframe>
 </div>
 
+    <!-- AUDIO (akan dimuat secara dinamis) -->
+    <audio id="partyMusic" loop preload="auto" style="display: none;">
+        <!-- Music akan dimuat otomatis -->
+    </audio>
+
+    <script>
+        // GLOBAL VARIABLES
+        let partyMusic = null;
+        let currentPhoto = 1;
+        let isMusicPlaying = false;
+        let heartInterval;
+
+        // 1. START BIRTHDAY PARTY
+        function startBirthdayParty() {
+            // Hide popup
+            document.getElementById('birthdayPopup').style.display = 'none';
+            
+            // Show main content
+            document.getElementById('mainContainer').classList.add('show');
+            
+            // Show music control
+            document.getElementById('musicPlayer').style.display = 'block';
+            
+            // Start floating hearts
+            startFloatingHearts();
+            
+            // Start particles
+            createParticles();
+            
+            // Calculate days together
+            calculateDaysTogether();
+            
+            // Auto play music (dengan fallback)
+            initMusic();
+        }
+
+        // 2. MUSIC SYSTEM
+        function initMusic() {
+            partyMusic = document.getElementById('partyMusic');
+            
+            // Fallback ke YouTube embed jika file lokal tidak ada
+            if (!partyMusic.canPlayType('audio/mpeg')) {
+                // Create YouTube embed sebagai fallback
+                const ytEmbed = document.createElement('iframe');
+                ytEmbed.src = 'https://www.youtube.com/embed/XL73M1ubdnQ?start=20&autoplay=1&mute=0&loop=1&playlist=XL73M1ubdnQ&controls=0&showinfo=0&rel=0';
+                ytEmbed.style.cssText = 'position:fixed;top:-100%;width:1px;height:1px;opacity:0;';
+                document.body.appendChild(ytEmbed);
+            } else {
+                // Load birthday song
+                partyMusic.src = 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav'; // Fallback sound
+                partyMusic.volume = 0.3;
+                partyMusic.play().catch(e => console.log('Autoplay blocked'));
+            }
+        }
+
+        function togglePartyMusic() {
+            const btn = document.getElementById('musicControl');
+            const icon = btn.querySelector('i');
+            
+            if (partyMusic && !partyMusic.paused) {
+                partyMusic.pause();
+                icon.className = 'fas fa-play';
+                isMusicPlaying = false;
+            } else {
+                partyMusic.play().catch(e => console.log('Play failed'));
+                icon.className = 'fas fa-pause';
+                isMusicPlaying = true;
+            }
+        }
+
+        // 3. FOTO SLIDESHOW
+        function showPhoto(n) {
+            // Ganti dengan foto-foto kalian (upload ke hosting atau gunakan placeholder)
+            const photos = [
+                'foto1.jpeg',
+                'foto2.jpeg',
+                'foto3.jpeg',
+                'foto4.jpeg',
+                'foto5.jpeg',
+                'foto6.jpeg',
+                'foto7.jpeg'
+            ];
+            
+            document.getElementById('slideImg').src = photos[n-1];
+            document.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i + 1 === n);
+            });
+            currentPhoto = n;
+        }
+
+        // AUTO SLIDESHOW
+        setInterval(() => {
+            currentPhoto = (currentPhoto % 7) + 1;
+            showPhoto(currentPhoto);
+        }, 4000);
+
+        // 4. SURPRISE FUNCTION
+        function showSurprise() {
+            const surprise = document.getElementById('surprise');
+            const btn = document.querySelector('.btn-surprise');
+            
+            surprise.classList.remove('hidden');
+            surprise.classList.add('show');
+            btn.style.display = 'none';
+            
+            // FIREWORKS EFFECT
+            createFireworks();
+            
+            // Celebration sound
+            playCelebrationSound();
+        }
+
+        function createFireworks() {
+            for(let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const fw = document.createElement('div');
+                    const emojis = ['💖', '🎉', '✨', '🎊', '💫', '🌟', '🎈'];
+                    fw.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    fw.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: ${Math.random() * 100}vw;
+                        font-size: ${30 + Math.random() * 40}px;
+                        pointer-events: none;
+                        z-index: 9999;
+                        animation: firework 2s ease-out forwards;
+                        transform: translate(-50%, -50%);
+                    `;
+                    document.body.appendChild(fw);
+                    setTimeout(() => fw.remove(), 2000);
+                }, i * 80);
+            }
+        }
+
+        function playCelebrationSound() {
+            // Simple celebration sound using Web Audio API
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(1200, audioContext.currentTime + 0.1);
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        // 5. FLOATING HEARTS
+        function startFloatingHearts() {
+            heartInterval = setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = ['💕', '💖', '💗', '💓', '💞'][Math.floor(Math.random() * 5)];
+                heart.className = 'heart-float';
+                heart.style.cssText = `
+                    left: ${Math.random() * 100}vw;
+                    animation-duration: ${3 + Math.random() * 3}s;
+                    animation-delay: ${Math.random() * 2}s;
+                    font-size: ${20 + Math.random() * 30}px;
+                `;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 8000);
+            }, 800);
+        }
+
+        // 6. PARTICLES SYSTEM
+        function createParticles() {
+            const canvas = document.createElement('canvas');
+            canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:2;';
+            document.getElementById('particles').appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            for(let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.5,
+                    vy: (Math.random() - 0.5) * 0.5,
+                    size: Math.random() * 3 + 1,
+                    opacity: Math.random() * 0.5 + 0.2
+                });
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    
+                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 107, 107, ${p.opacity})`;
+                    ctx.fill();
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+
+        // 7. DAYS TOGETHER COUNTER
+        function calculateDaysTogether() {
+            // Ganti tanggal mulai pacaran kalian
+            const startDate = new Date('2021-01-01'); // Edit ini!
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('daysTogether').textContent = diffDays;
+        }
+
+        // 8. EVENT LISTENERS
+        document.getElementById('musicControl').addEventListener('click', togglePartyMusic);
+
+        // Resize handler
+        window.addEventListener('resize', () => {
+            calculateDaysTogether();
+        });
+
+        // Copy to clipboard surprise
+        document.getElementById('surprise').addEventListener('click', function(e) {
+            if(e.target.closest('.love-stats')) {
+                navigator.clipboard.writeText('Vee sayang dan cintaaa Dav selamanyaaaaa ❤️');
+                // Show copied message
+                const copied = document.createElement('div');
+                copied.textContent = '💕 Copied to clipboard!';
+                copied.style.cssText = 'position:fixed;top:20px;right:20px;background:#ff6b6b;color:white;padding:15px 25px;border-radius:25px;z-index:10000;';
+                document.body.appendChild(copied);
+                setTimeout(() => copied.remove(), 3000);
+            }
+        });
+
+        // 9. CSS ANIMATIONS (tambahan)
+        const extraStyle = document.createElement('style');
+        extraStyle.textContent = `
+            @keyframes firework {
+                0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+                100% { transform: translate(-50%, -150vh) scale(3); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(extraStyle);
+
+        console.log('🎉 Birthday Love Website Loaded Successfully! ❤️');
+        console.log('Upload foto kalian ke: foto1.jpeg, foto2.jpeg, dst...');
+        console.log('Edit tanggal pacaran di calculateDaysTogether()');
+    </script>
 </body>
 </html>

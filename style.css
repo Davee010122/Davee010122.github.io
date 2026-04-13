@@ -10,7 +10,7 @@ body {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
-    height: 100vh;
+    min-height: 100vh;
     position: relative;
 }
 
@@ -75,6 +75,7 @@ body {
     background: linear-gradient(45deg, #ff6b6b, #ffd93d, #6bcf7f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin-bottom: 10px;
     font-weight: 700;
 }
@@ -84,152 +85,106 @@ body {
     color: white;
     margin-bottom: 30px;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    font-weight: 700;
+}
+
+/* Message Container */
+.message {
+    background: rgba(255,255,255,0.12);
+    backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 35px;
+    margin: 30px 0 40px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    max-width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .message p {
     font-size: clamp(1.1rem, 3vw, 1.4rem);
     color: white;
-    margin: 15px 0;
+    margin: 18px 0;
     font-weight: 300;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+    line-height: 1.6;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
 }
 
-.photo {
-    margin: 40px 0;
-}
-
-.photo img {
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    border: 5px solid rgba(255,255,255,0.3);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    object-fit: cover;
-}
-
-.photo p {
-    margin-top: 15px;
-    color: #ffd93d;
+.message p:last-child {
     font-weight: 600;
-}
-
-.wishes {
-    margin: 40px 0;
-}
-
-.wishes h3 {
+    font-size: 1.2em;
     color: #ffd93d;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
 }
 
-.wishes ul {
-    list-style: none;
+/* SLIDESHOW PHOTOS */
+.photo-section {
+    margin: 50px 0;
     max-width: 500px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.wishes li {
-    background: rgba(255,255,255,0.1);
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 15px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
+.slideshow-wrapper {
+    position: relative;
+    max-width: 100%;
 }
 
-.btn-surprise {
-    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
-    color: white;
-    border: none;
-    padding: 18px 40px;
-    font-size: 1.2rem;
-    border-radius: 50px;
+#slideImg {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 25px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    transition: all 0.5s ease;
+    border: 4px solid rgba(255,255,255,0.4);
+}
+
+#slideImg:hover {
+    transform: scale(1.02);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+}
+
+.nav-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.6);
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active,
+.dot:hover {
+    background: #ffd93d;
+    transform: scale(1.4);
+    box-shadow: 0 0 15px #ffd93d;
+}
+
+.photo-text {
+    color: #ffd93d;
+    font-size: 1.2rem;
     font-weight: 600;
-    transition: all 0.3s;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    margin-top: 15px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 
-.btn-surprise:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-}
-
-.surprise {
-    margin-top: 40px;
-    padding: 30px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 20px;
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.3);
-}
-
-.surprise.hidden {
-    display: none;
-}
-
-.love-stats p {
-    margin: 10px 0;
-    font-size: 1.1rem;
-}
-
-@media (max-width: 768px) {
-    .container {
-        padding: 10px;
-    }
-    
-    .photo img {
-        width: 200px;
-        height: 200px;
-    }
-} 
-/* MUSIC PLAYER RESPONSIVE */
-.music-player {
-    position: fixed !important;
-    bottom: 25px !important;
-    right: 25px !important;
-    z-index: 9999 !important;
-}
-
-#musicBtn {
-    background: linear-gradient(45deg, #ff6b6b, #ffd93d) !important;
-    color: white !important;
-    border: none !important;
-    padding: 20px 35px !important;  /* Lebih besar */
-    border-radius: 50px !important;
-    font-size: clamp(14px, 4vw, 18px) !important;  /* Responsive */
-    font-weight: bold !important;
-    cursor: pointer !important;
-    box-shadow: 0 12px 35px rgba(0,0,0,0.4) !important;
-    font-family: 'Poppins', sans-serif !important;
-    min-height: 65px !important;  /* Minimal tinggi */
-    min-width: 140px !important;
-    transition: all 0.3s !important;
-}
-
-#musicBtn:hover, #musicBtn:active {
-    transform: scale(1.08) !important;
-    box-shadow: 0 18px 45px rgba(0,0,0,0.5) !important;
-}
-
-/* Mobile Extra Large */
-@media (max-width: 480px) {
-    #musicBtn {
-        padding: 25px 40px !important;
-        font-size: 18px !important;
-        min-height: 75px !important;
-    }
-}
+/* Promises Section */
 .promises {
     margin: 40px 0;
-    padding: 25px;
+    padding: 30px;
     background: rgba(255,255,255,0.12);
-    border-radius: 20px;
+    border-radius: 25px;
     backdrop-filter: blur(15px);
     border: 2px solid rgba(255,217,61,0.5);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
     max-width: 90vw;
     margin-left: auto;
     margin-right: auto;
@@ -237,10 +192,11 @@ body {
 
 .promises h3 {
     color: #ffd93d !important;
-    font-size: clamp(1.2rem, 5vw, 1.6rem) !important;
-    margin-bottom: 20px;
+    font-size: clamp(1.3rem, 5vw, 1.8rem) !important;
+    margin-bottom: 25px;
     text-align: center;
     text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    font-weight: 700;
 }
 
 .promises ul {
@@ -251,44 +207,234 @@ body {
 }
 
 .promises li {
-    background: rgba(255,255,255,0.15) !important;
-    margin: 12px 0;
-    padding: 20px !important;
-    border-radius: 18px;
+    background: rgba(255,255,255,0.18) !important;
+    margin: 15px 0;
+    padding: 22px 20px !important;
+    border-radius: 20px;
     font-size: clamp(1rem, 4vw, 1.15rem) !important;
-    border-left: 5px solid #ffd93d;
+    border-left: 6px solid #ffd93d;
     text-align: left;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
-/* MOBILE FIX */
+.promises li:hover {
+    transform: translateX(10px);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+}
+
+/* Surprise Button */
+.btn-surprise {
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+    color: white;
+    border: none;
+    padding: 20px 45px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.4s ease;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    box-shadow: 0 15px 35px rgba(255,107,107,0.4);
+    margin: 40px 0;
+}
+
+.btn-surprise:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 25px 50px rgba(255,107,107,0.6);
+}
+
+/* Surprise Box */
+.surprise {
+    margin-top: 50px;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.1));
+    border-radius: 30px;
+    backdrop-filter: blur(25px);
+    border: 3px solid rgba(255,217,61,0.6);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    animation: surprisePop 1s ease-out;
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.8s ease;
+}
+
+.surprise.show {
+    transform: scale(1);
+    opacity: 1;
+}
+
+@keyframes surprisePop {
+    0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    50% { transform: scale(1.1) rotate(2deg); }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.surprise h3 {
+    font-size: 2.5rem;
+    background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 25px;
+    text-shadow: none;
+}
+
+.surprise p {
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+
+.love-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.love-stats p {
+    background: rgba(255,255,255,0.2);
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.love-stats span {
+    color: #ffd93d;
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+/* 🎵 YOUTUBE MUSIC PLAYER - KADO TERINDAH 🎁 */
+.music-player {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+#musicControl {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    /* Tema Kado Terindah - Pink Gold Birthday */
+    background: linear-gradient(45deg, #FF69B4, #FFD700, #FF1493);
+    color: white;
+    border: 4px solid rgba(255,255,255,0.4);
+    font-size: 1.7rem;
+    cursor: pointer;
+    box-shadow: 0 25px 60px rgba(255,105,180,0.7);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    position: relative;
+    overflow: hidden;
+    font-weight: 700;
+}
+
+#musicControl::before {
+    content: '🎁';
+    position: absolute;
+    font-size: 1.2rem;
+    top: -5px;
+    right: -5px;
+    animation: giftBounce 2s infinite;
+    z-index: 1;
+}
+
+@keyframes giftBounce {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.2) rotate(10deg); }
+}
+
+#musicControl::after {
+    content: '♪';
+    position: absolute;
+    font-size: 0.9rem;
+    top: 8px;
+    left: 8px;
+    opacity: 0.8;
+    animation: musicNote 2s infinite;
+}
+
+@keyframes musicNote {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-4px) rotate(15deg); }
+}
+
+#musicControl:hover {
+    transform: scale(1.2) rotate(360deg);
+    box-shadow: 0 35px 80px rgba(255,105,180,0.9);
+}
+
+#musicControl.paused {
+    background: linear-gradient(45deg, #666, #999);
+    animation: none;
+}
+
+#musicControl.paused::before {
+    content: '🔇';
+    animation: none;
+}
+
+/* HATI JATUH - EXTRA ROMANTIS */
+@keyframes fall {
+    to { 
+        transform: translateY(100vh) rotate(720deg); 
+        opacity: 0; 
+    }
+}
+
+@keyframes firework {
+    0% { transform: translateY(0) scale(0); opacity: 1; }
+    100% { transform: translateY(-100vh) scale(2); opacity: 0; }
+}
+
+/* Mobile Optimizations */
 @media (max-width: 768px) {
-    .promises {
-        margin: 30px 15px;
-        padding: 20px;
+    .container { padding: 15px; }
+    .message { padding: 25px 20px; margin: 20px 0; }
+    #slideImg { height: 300px; }
+    .photo-section { margin: 40px 0; }
+    .promises { margin: 30px 10px; padding: 25px; }
+    .promises li { padding: 18px 15px !important; margin: 12px 0; }
+    .surprise { padding: 30px 20px; margin: 40px 10px; }
+    .love-stats { grid-template-columns: 1fr; }
+    
+    .music-player {
+        bottom: 20px !important;
+        right: 20px !important;
     }
     
-    .promises li {
-        padding: 18px 15px !important;
-        margin: 10px 5px;
+    #musicControl {
+        width: 65px;
+        height: 65px;
+        font-size: 1.5rem;
+    }
+    
+    #musicControl::before {
+        font-size: 1rem;
+        top: -3px;
+        right: -3px;
     }
 }
-/* 7 FOTO SLIDESHOW */
-.photo-slideshow {
-    margin: 50px 0;
-    text-align: center;
+
+@media (max-width: 480px) {
+    #slideImg { height: 250px; }
+    .promises li { padding: 16px 12px !important; }
+    #musicControl {
+        width: 60px;
+        height: 60px;
+    }
 }
 
-.slideshow-container {
-    position: relative;
-    max-width: 350px;
-    margin: 0 auto;
-    display: inline-block;
+/* Hidden class */
+.hidden { 
+    display: none !important; 
 }
-
-#slideshow-img {
-    width: 330px;
-    height: 330px;
-    border-radius: 50%;
-    border: 8px solid rgba(255,255,255,0.5);
-    box-shadow: 0 25px 60px
