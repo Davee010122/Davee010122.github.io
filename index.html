@@ -501,21 +501,12 @@
             <i class="fas fa-pause"></i>
         </button>
     </div>
-    <!-- 🎵 KADO TERINDAH GLENN SEBASTIAN (detik 20+) -->
-<div id="youtubePlayer" style="position:fixed;top:-100%;width:1px;height:1px;opacity:0;z-index:1001;">
-    <iframe 
-        id="ytPlayer" 
-        src="https://www.youtube.com/embed/XL73M1ubdnQ?start=20&autoplay=1&mute=0&loop=1&playlist=XL73M1ubdnQ&controls=0&showinfo=0&rel=0" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-    </iframe>
-</div>
 
+    
     <!-- AUDIO (akan dimuat secara dinamis) -->
-    <audio id="partyMusic" loop preload="auto" style="display: none;">
-        <!-- Music akan dimuat otomatis -->
-    </audio>
-
+    <audio id="partyMusic" loop>
+    <source src="love-song.mp3" type="audio/mpeg">
+</audio>
     <script>
         // GLOBAL VARIABLES
         let partyMusic = null;

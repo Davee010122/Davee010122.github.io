@@ -22,118 +22,45 @@ function startBirthday() {
     startFallingHearts();
     preloadPhotos();
     calculateDaysTogether();
-    
-    // START YOUTUBE MUSIC - FIXED
-    initYouTubeMusic();
-}
 
-// 2. YOUTUBE MUSIC - KADO TERINDAH (detik 20+) **SEKARANG LENGKAP!**
-function initYouTubeMusic() {
-    // Cek apakah YouTube API sudah loaded
-    if (typeof YT !== 'undefined' && YT.loaded) {
-        initYouTubePlayer();
-        return;
-    }
+    const audio = document.getElementById('partyMusic');
+audio.currentTime = 20;
+audio.play().catch(() => {});
     
-    // LOAD YOUTUBE API jika belum ada
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScript = document.getElementsByTagName('script')[0];
-    firstScript.parentNode.insertBefore(tag, firstScript);
-    
-    // Set global callback untuk API ready
-    window.onYouTubeIframeAPIReady = function() {
-        initYouTubePlayer();
-    };
-}
+   
 
-// Initialize YouTube Player **LENGKAP**
-function initYouTubePlayer() {
-    ytPlayer = new YT.Player('ytPlayer', {
-        events: {
-            'onReady': function(event) {
-                playerReady = true;
-                console.log('🎁 YouTube Player Ready!');
-                
-                // Mulai dari detik 20 (bagian romantis)
-                event.target.seekTo(20, true);
-                event.target.setVolume(30); // 30% volume
-                event.target.playVideo();
-                
-                // Update UI
-                isMusicPlaying = true;
-                const btn = document.getElementById('musicControl');
-                if (btn) {
-                    btn.classList.add('playing');
-                    const icon = btn.querySelector('i');
-                    if (icon) icon.className = 'fas fa-pause';
-                }
-                console.log('🎵 Kado Terindah started from 20s! ❤️');
-            },
-            'onStateChange': function(event) {
-                const btn = document.getElementById('musicControl');
-                const icon = btn ? btn.querySelector('i') : null;
-                
-                if (event.data == YT.PlayerState.ENDED) {
-                    // Loop dari detik 20
-                    setTimeout(() => {
-                        if (ytPlayer) {
-                            ytPlayer.seekTo(20, true);
-                            ytPlayer.playVideo();
-                        }
-                    }, 1000);
-                }
-                
-                // Update button state
-                if (event.data == YT.PlayerState.PLAYING) {
-                    isMusicPlaying = true;
-                    if (btn) btn.classList.add('playing');
-                    if (btn && icon) icon.className = 'fas fa-pause';
-                } else if (event.data == YT.PlayerState.PAUSED) {
-                    isMusicPlaying = false;
-                    if (btn) {
-                        btn.classList.remove('playing');
-                        btn.classList.add('paused');
-                    }
-                    if (icon) icon.className = 'fas fa-play';
-                }
-            },
-            'onError': function(event) {
-                console.log('YouTube Error:', event.data);
-                // Fallback sound
-                playFallbackSound();
-            }
-        }
-    });
+    
 }
 
 function togglePartyMusic() {
-    if (!ytPlayer || !playerReady) {
-        console.log('Player not ready');
+    const audio = document.getElementById('partyMusic');
+    const btn = document.getElementById('musicControl');
+    const icon = btn.querySelector('i');
+
+    if (!audio) {
+        alert("Audio tidak ditemukan!");
         return;
     }
-    
-    const btn = document.getElementById('musicControl');
-    const icon = btn ? btn.querySelector('i') : null;
-    
-    if (isMusicPlaying) {
-        // PAUSE
-        ytPlayer.pauseVideo();
-        if (icon) icon.className = 'fas fa-play';
-        if (btn) {
-            btn.classList.remove('playing');
-            btn.classList.add('paused');
-        }
-        isMusicPlaying = false;
+
+    if (audio.paused) {
+        // pastikan mulai dari detik 20 setelah siap
+        audio.addEventListener('loadedmetadata', () => {
+            audio.currentTime = 20;
+        }, { once: true });
+
+        audio.play()
+            .then(() => {
+                icon.className = 'fas fa-pause';
+                console.log("Lagu berhasil diputar");
+            })
+            .catch(err => {
+                console.log("Error play:", err);
+                alert("Browser blokir audio 😢 klik lagi ya");
+            });
+
     } else {
-        // PLAY
-        ytPlayer.playVideo();
-        if (icon) icon.className = 'fas fa-pause';
-        if (btn) {
-            btn.classList.remove('paused');
-            btn.classList.add('playing');
-        }
-        isMusicPlaying = true;
+        audio.pause();
+        icon.className = 'fas fa-play';
     }
 }
 
