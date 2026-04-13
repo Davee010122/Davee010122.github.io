@@ -37,3 +37,24 @@ function toggleMusic() {
 }
 
 createParticles();
+
+// 7 FOTO SLIDESHOW
+let slideIndex = 1;
+const photos = [
+    'foto1.jpeg', 'foto2.jpeg', 'foto3.jpeg', 
+    'foto4.jpeg', 'foto5.jpeg', 'foto6.jpeg', 'foto7.jpeg'
+];
+
+function showSlide(n) {
+    const img = document.getElementById('slideshow-img');
+    const dots = document.querySelectorAll('.dot');
+    
+    slideIndex = n > photos.length ? 1 : n;
+    
+    // Smooth fade transition
+    img.style.opacity = '0.4';
+    img.style.transform = 'scale(0.95)';
+    
+    setTimeout(() => {
+        img.src = photos[slideIndex - 1];
+        img.style.opacity
